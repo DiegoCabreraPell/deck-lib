@@ -11,8 +11,6 @@
 #include <stdlib.h>
 
 void create_deck(Deck* deck, uint8_t num_suits, uint8_t num_values) {
-    deck = malloc(sizeof(Deck));
-
     uint16_t *cards, cursor;
     int max_cards = num_values * num_suits;
 
@@ -90,16 +88,11 @@ void put_in(Deck *deck, Card card, int position) {
 
 
 void free_deck(Deck *deck) {
-    if (deck)
-    {
-        free(deck->data);
-	    free(deck);
-    }
+    free(deck->data);
 }
 
 
 int num_cards_left(Deck *deck) {
-    
     return deck->cards_left;	
 }
 
