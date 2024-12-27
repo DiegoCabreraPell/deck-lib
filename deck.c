@@ -17,6 +17,7 @@ void create_deck(Deck* deck, uint8_t num_suits, uint8_t num_values) {
     deck->suits = num_suits;
     deck->values = num_values;
     deck->cards_left = max_cards;
+    deck->cards_discarded = 0;
     deck->discard_head = 0;
     deck->deck_head = 0;
     deck->data = malloc(sizeof(uint16_t) * max_cards);
@@ -54,6 +55,7 @@ void reset_deck(Deck *deck) {
     max_cards = deck->values * deck->suits;
 
 	deck->cards_left = max_cards;
+    deck->cards_discarded = 0;
     deck->discard_head = 0;
     deck->deck_head = 0;
 
@@ -85,6 +87,8 @@ void discard(Deck *deck, Card card) {
 
     cards[index] = deck->discard_head;
     deck->discard_head = index;
+
+    deck->cards_discarded++;
 }
 
 

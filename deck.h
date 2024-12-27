@@ -15,6 +15,7 @@ typedef struct Deck {
     uint8_t suits;
     uint8_t values;
     uint16_t cards_left;
+    uint16_t cards_discarded;
     uint16_t *data;
     uint16_t discard_head;
     uint16_t deck_head;
