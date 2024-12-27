@@ -89,7 +89,33 @@ void discard(Deck *deck, Card card) {
 
 
 void put_in(Deck *deck, Card card, int position) {
-	
+    uint16_t index, *cards, cursor, prev;
+
+    cards = deck->data;
+    index = (deck->values * card.suit) + card.value;
+
+    if (position >= deck->cards_left) {
+        position = deck->cards_left-1;
+    } else if (position < 0) {
+        position = 0;
+    }
+
+    if (position == 0){
+        cards[index] = deck->deck_head;
+        deck->deck_head = index;
+        return;
+    }
+
+    prev = deck->deck_head;
+    cursor = deck->deck_head;
+    while (position)
+    {
+        prev = cursor;
+        cursor = cards[cursor];
+    }
+
+    cards[prev] = index;
+    cards[index] = cursor;
 }
 
 
