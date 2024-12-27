@@ -1,7 +1,6 @@
 /**
  * Author: Diego Cabrera Pell
  * Created: 26/12/2024
- * Last Edited: 26/12/2024
  *
  * Interface for the deck library
  **/
@@ -10,7 +9,6 @@
 #ifndef DECK_H
 #define DECK_H
 
-#include <cstdint>
 #include <stdint.h>
 
 typedef struct Deck {    
@@ -18,6 +16,8 @@ typedef struct Deck {
     uint8_t values;
     int cards_left;
     void* data;
+    uint16_t discard_head;
+    uint16_t deck_head;
 } Deck;
 
 typedef struct Card {
