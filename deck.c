@@ -55,7 +55,6 @@ void reset_deck(Deck *deck) {
     max_cards = deck->values * deck->suits;
 
 	deck->cards_left = max_cards;
-    deck->cards_discarded = 0;
     deck->discard_head = 0;
     deck->deck_head = 0;
 
@@ -68,9 +67,46 @@ void reset_deck(Deck *deck) {
     }
 }
 
+/*
+ * Fisher-Yates Shuffling algorithm
+ * Produces an unbiased permutation
+ */
+void shuffle_array(uint16_t* arr, uint16_t size) {
+    int j;
+    uint16_t tmp;
+
+    for (int i = 0; i < size-2; i++)
+    {
+        j = rand() % (size - i) + i;
+        tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp;
+    }
+}
 
 void shuffle_deck(Deck *deck) {
-	
+    uint16_t *cards, *card_array, index, head;
+
+    if (deck->cards_left == 0)
+        return;
+
+    cards = deck->data;
+    card_array = (uint16_t*) malloc(sizeof(uint16_t) * (deck->cards_left));
+
+    index = 0;
+    head = deck->deck_head;
+    while (index < deck->cards_left) {
+        card_array[index++] = head;
+        head = cards[head];
+    }
+
+    shuffle_array(card_array, deck->cards_left);
+
+    /* Putting the shuffled cards back into the deck */
+    deck->deck_head = card_array[0];
+    for (int i = 1; i < deck->cards_left; i++) {
+        cards[i-1] = card_array[i];
+    }
 }
 
 
