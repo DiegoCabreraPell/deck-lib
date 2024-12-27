@@ -78,7 +78,13 @@ void shuffle_discard_in(Deck *deck) {
 
 
 void discard(Deck *deck, Card card) {
-	
+	uint16_t index, *cards;
+
+    cards = deck->data;
+    index = (deck->values * card.suit) + card.value;
+
+    cards[index] = deck->discard_head;
+    deck->discard_head = index;
 }
 
 
