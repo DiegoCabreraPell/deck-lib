@@ -111,7 +111,38 @@ void shuffle_deck(Deck *deck) {
 
 
 void shuffle_discard_in(Deck *deck) {
-	
+	uint16_t *cards, *card_array, index, head, num_cards;
+
+    num_cards = deck->cards_left + deck->cards_discarded;
+    if (num_cards == 0)
+        return;
+
+    cards = deck->data;
+    card_array = (uint16_t*) malloc(sizeof(uint16_t) * (num_cards));
+
+    index = 0;
+    head = deck->deck_head;
+    for (int i = 0; i < deck->cards_left; i++) {
+        card_array[index++] = head;
+        head = cards[head];
+    }
+
+    head = deck->discard_head;
+    for (int i = 0; i < deck->cards_discarded; i++) {
+        card_array[index++] = head;
+        head = cards[head];
+    }
+
+    shuffle_array(card_array, num_cards);
+
+    /* Putting the shuffled cards back into the deck */
+    deck->deck_head = card_array[0];
+    for (int i = 1; i < num_cards; i++) {
+        cards[i-1] = card_array[i];
+    }
+
+    deck->cards_discarded = 0;
+    deck->cards_left = num_cards;
 }
 
 
